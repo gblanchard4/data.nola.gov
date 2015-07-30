@@ -6,6 +6,7 @@ Playing with data.nola.gov data
 * ggmap
 * ggplot2
 * sp
+
 -----------------------------
 
 ## booze-orleans
