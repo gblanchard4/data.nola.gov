@@ -7,7 +7,6 @@ library(RSocrata)
 
 # helper function for getting lat/lon from restaurant strings
 restaurant_location <- function(location){
-  # get "(29.980464294000058, -90.08385663199994)"
   lat_lon <- strsplit(strsplit(location,"\n")[[1]][3], ", ")
   # trim the "(" & ")"
   lat <- as.numeric(gsub("\\(","",lat_lon[[1]][1]))
@@ -17,14 +16,14 @@ restaurant_location <- function(location){
 
 restaurant_add_lat_lon <- function(DF){
   # get "(29.980464294000058, -90.08385663199994)"
-  lat_vector = NULL
-  lon_vector = NULL
+  lat_vector <-  c()
+  lon_vector <- c()
   for (loc in DF$Location.1) {
-    lat_lon <- strsplit(strsplit(DF$Location.1,"\n")[[1]][3], ", ")
+    lat_lon <- strsplit(strsplit(loc,"\n")[[1]][3], ", ")
     # trim the "(" & ")"
-    lat <- as.numeric(gsub("\\(","",lat_lon[[1]][1]))
+    lat <- gsub("\\(","",lat_lon[[1]][1])
     lat_vector <- c(lat_vector, lat)
-    lon <- as.numeric(gsub("\\)","",lat_lon[[1]][2]))
+    lon <- gsub("\\)","",lat_lon[[1]][2])
     lon_vector <- c(lon_vector, lon)
   }
   DF$Lat <- lat_vector
@@ -47,3 +46,4 @@ names(restaurants.coords) <- c("lat", "lon")
 # Convert to matrices
 
 map + geom_point(data=restaurants.coords, aes(x=lon, y=lat), color="blue", size=3, alpha=0.7)
+
